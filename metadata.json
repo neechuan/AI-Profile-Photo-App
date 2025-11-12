@@ -1,0 +1,5 @@
+{
+  "name": "AI Profile Photo Studio",
+  "description": "An AI-powered application to generate professional, casual, or creative profile photos from an uploaded image. Users can crop their photo and select a style to generate a gallery of new images using the Gemini 2.5 Flash Image model.",
+  "requestFramePermissions": []
+}

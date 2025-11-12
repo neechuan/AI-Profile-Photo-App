@@ -9,6 +9,22 @@ interface StylePanelProps {
   isImageUploaded: boolean;
 }
 
+const styleDescriptions: Record<keyof typeof StylePreset, string> = {
+    Pro: "Corporate headshot style.",
+    Casual: "Friendly and relaxed look.",
+    Creative: "Imaginative and unconventional.",
+    Artistic: "Painterly or stylized portrait.",
+    Glamour: "Polished and glamorous beauty shot.",
+    Street: "Candid-style in an urban setting.",
+    Candid: "Natural, unposed and genuine.",
+    Fashion: "High-fashion, editorial style.",
+    Editorial: "Storytelling, magazine style.",
+    Boudoir: "Intimate and sensual.",
+    CloseUp: "Detailed close-up of the face.",
+    Dramatic: "Dramatic lighting and mood.",
+};
+
+
 export const StylePanel: React.FC<StylePanelProps> = ({ onGenerate, onGenerateQuote, isLoading, isImageUploaded }) => {
   const [prompt, setPrompt] = useState('');
   const [quote, setQuote] = useState('');
@@ -21,21 +37,20 @@ export const StylePanel: React.FC<StylePanelProps> = ({ onGenerate, onGenerateQu
     <div className="bg-gray-800 rounded-lg p-6 flex flex-col h-full space-y-6">
       <div>
         <h2 className="text-xl font-bold text-white mb-3">2. Choose Your Style</h2>
-        <div className="space-y-2">
-            <button 
-                onClick={() => handlePresetClick(StylePreset.Pro)}
-                disabled={!isImageUploaded}
-                className="w-full text-left p-3 rounded-md bg-gray-700 hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                <h3 className="font-semibold text-white">Pro</h3>
-                <p className="text-sm text-gray-400">Corporate headshot style.</p>
-            </button>
-             <button 
-                onClick={() => handlePresetClick(StylePreset.Casual)}
-                disabled={!isImageUploaded}
-                className="w-full text-left p-3 rounded-md bg-gray-700 hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                <h3 className="font-semibold text-white">Casual</h3>
-                <p className="text-sm text-gray-400">Friendly and relaxed look.</p>
-            </button>
+        <div className="space-y-2 max-h-60 overflow-y-auto pr-2">
+          {Object.keys(StylePreset).map((styleKey) => {
+              const key = styleKey as keyof typeof StylePreset;
+              return (
+                 <button 
+                    key={key}
+                    onClick={() => handlePresetClick(StylePreset[key])}
+                    disabled={!isImageUploaded}
+                    className="w-full text-left p-3 rounded-md bg-gray-700 hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                    <h3 className="font-semibold text-white">{key === 'CloseUp' ? 'Close Up' : key}</h3>
+                    <p className="text-sm text-gray-400">{styleDescriptions[key]}</p>
+                </button>
+              )
+          })}
         </div>
       </div>
       
